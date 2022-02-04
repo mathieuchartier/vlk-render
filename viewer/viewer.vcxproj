@@ -78,13 +78,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>C:\Code\vlk-render\external\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Code\vlk-render\viewer\x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Code\vlk-render\external\SDL\include;C:\Code\vlk-render;$(VULKAN_SDK)/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Code\vlk-render\viewer\x64\Debug;$(VULKAN_SDK)/Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>C:\Code\vlk-render\external\SDL\include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Code\vlk-render\viewer\x64\Debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>C:\Code\vlk-render\external\SDL\include;C:\Code\vlk-render;$(VULKAN_SDK)/Include;$(IncludePath)</IncludePath>
+    <LibraryPath>C:\Code\vlk-render\viewer\x64\Debug;$(VULKAN_SDK)/Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -120,6 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -134,6 +135,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -143,10 +145,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="viewer.cpp" />
+    <ClInclude Include="sdl_window.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sdl_window.h" />
+    <ClCompile Include="viewer.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
