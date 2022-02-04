@@ -16,9 +16,15 @@
     <ClInclude Include="vkr_physical_devices.h">
       <Filter>Files</Filter>
     </ClInclude>
+    <ClInclude Include="vkr_swap_chain.h">
+      <Filter>Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vkr_engine.cc">
+      <Filter>Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vkr_swap_chain.cc">
       <Filter>Files</Filter>
     </ClCompile>
   </ItemGroup>

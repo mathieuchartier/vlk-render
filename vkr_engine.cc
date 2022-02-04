@@ -1,7 +1,5 @@
 #include "vkr_engine.h"
 
-#pragma comment(lib, "vulkan-1.lib")
-
 namespace vkr {
 
 std::vector<VkLayerProperties> Engine::EnumerateInstanceLayerProperties() {

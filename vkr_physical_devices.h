@@ -80,6 +80,14 @@ public:
     return {};
   }
 
+  std::vector<VkQueueFamilyProperties> GetPhysicalDeviceQueueFamilyProperties() {
+    uint32_t count = 0;
+    vkGetPhysicalDeviceQueueFamilyProperties(device_, &count, nullptr);
+    std::vector<VkQueueFamilyProperties> ret(count);
+    vkGetPhysicalDeviceQueueFamilyProperties(device_, &count, ret.data());
+    return ret;
+  }
+
   const VkPhysicalDeviceMemoryProperties& MemProperties() const { return mem_properties_; }
   const VkPhysicalDeviceProperties& Properties() const { return properties_; }
 };

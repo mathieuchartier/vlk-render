@@ -159,10 +159,12 @@
   <ItemGroup>
     <ClInclude Include="vkr_engine.h" />
     <ClInclude Include="vkr_physical_devices.h" />
+    <ClInclude Include="vkr_swap_chain.h" />
     <ClInclude Include="vkr_util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vkr_engine.cc" />
+    <ClCompile Include="vkr_swap_chain.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
