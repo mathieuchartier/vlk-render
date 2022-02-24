@@ -46,20 +46,12 @@ void SwapChain::Create(VkExtent2D extent, uint32_t image_count) {
   }
   uint32_t count = 0;
   vkGetSwapchainImagesKHR(engine_->Device(), swap_chain, &count, nullptr);
-  std::vector<VkImage> sc_images(count);
-  vkGetSwapchainImagesKHR(engine_->Device(), swap_chain, &count, sc_images.data());
-
-  /*
-  std::unique_ptr<Image> image(Image::Create(
-    extent.width, extent.height, depth_fmt,
-    VK_IMAGE_TILING_OPTIMAL, VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT,
-    engine_->Device(), engine_->phys_devices_.Device()));
-  VkImageView depth_view = engine->CreateImageView(device, image->GetImage(), depth_fmt, VK_IMAGE_ASPECT_DEPTH_BIT);
-  std::vector<VkImageView> image_views;
-  for (auto& image : sc_images) {
-    VkImageView view = CreateImageView(device, image, surface_format_.format);
-    image_views.push_back(view);
-  }*/
+  swap_images_.resize(count);
+  vkGetSwapchainImagesKHR(engine_->Device(), swap_chain, &count, swap_images_.data());
+  for (auto& image : swap_images_) {
+    auto view = ImageView::Create(engine_, image, surface_format_.format);
+    swap_views_.push_back(std::move(view));
+  }
 }
 
 }

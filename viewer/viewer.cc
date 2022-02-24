@@ -19,6 +19,10 @@ int main(int argc, char *argv[]) {
     surface,
     {VK_PHYSICAL_DEVICE_TYPE_DISCRETE_GPU, VK_PHYSICAL_DEVICE_TYPE_INTEGRATED_GPU})
     .Assert("Failed to find physical device");
+  engine.InitSwapChain();
+
+  // engine.CreateSwapChain();
+
   SDL_Event e;
   bool quit = false;
   while (!quit) {

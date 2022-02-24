@@ -4,6 +4,7 @@
 #include <vulkan/vulkan.h>
 #include <vector>
 
+#include "vkr_image.h"
 #include "vkr_physical_devices.h"
 #include "vkr_swap_chain.h"
 #include "vkr_util.h"
@@ -114,6 +115,37 @@ public:
     create_info.ppEnabledExtensionNames = device_extensions.data();
 
     return vkCreateDevice(phys_devices_.Device(), &create_info, nullptr, &device_);
+  }
+
+  std::unique_ptr<Image> CreateImage(VkExtent3D ext, VkFormat fmt, VkImageTiling tiling, VkImageUsageFlags usage, VkMemoryPropertyFlags properties) {
+    VkImageCreateInfo image_info{};
+    image_info.sType = VK_STRUCTURE_TYPE_IMAGE_CREATE_INFO;
+    image_info.imageType = VK_IMAGE_TYPE_2D;
+    image_info.extent = ext;
+    image_info.mipLevels = 1;
+    image_info.arrayLayers = 1;
+    image_info.format = fmt;
+    image_info.tiling = tiling;
+    image_info.initialLayout = VK_IMAGE_LAYOUT_UNDEFINED;
+    image_info.usage = usage;
+    image_info.samples = VK_SAMPLE_COUNT_1_BIT;
+    image_info.sharingMode = VK_SHARING_MODE_EXCLUSIVE;
+    VkImage image;
+    if (vkCreateImage(Device(), &image_info, nullptr, &image) != VK_SUCCESS) {
+      return nullptr;
+    }
+    VkMemoryRequirements reqs;
+    vkGetImageMemoryRequirements(Device(), image, &reqs);
+    VkMemoryAllocateInfo alloc_info{};
+    alloc_info.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+    alloc_info.allocationSize = reqs.size;
+    alloc_info.memoryTypeIndex = phys_devices_.GetMemoryTypeIdx(reqs.memoryTypeBits, properties).value();
+    VkDeviceMemory memory;
+    if (vkAllocateMemory(Device(), &alloc_info, nullptr, &memory) != VK_SUCCESS) {
+      return nullptr;
+    }
+    vkBindImageMemory(Device(), image, memory, 0);
+    return std::unique_ptr<Image>(new Image(this, image, memory, image_info));
   }
 };
 

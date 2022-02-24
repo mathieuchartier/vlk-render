@@ -4,8 +4,11 @@
 
 #include <cstdlib>
 #include <iostream>
+#include <vector>
 
 namespace vkr {
+
+class Engine;
 
 class ResultHelper {
 public:

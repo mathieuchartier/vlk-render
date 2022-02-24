@@ -3,6 +3,8 @@
 #include <algorithm>
 #include <vector>
 #include <optional>
+
+#include "vkr_image.h"
 #include "vkr_util.h"
 
 namespace vkr {
@@ -19,6 +21,10 @@ public:
   VkSurfaceCapabilitiesKHR capabilities_;
   std::vector<VkSurfaceFormatKHR> formats_;
   std::vector<VkPresentModeKHR> present_modes_;
+
+  // Images
+  std::vector<VkImage> swap_images_;
+  std::vector<std::unique_ptr<ImageView>> swap_views_;
 
   uint32_t ImageMin() const { return capabilities_.minImageCount; }
   uint32_t ImageMax() const { return capabilities_.maxImageCount; }
