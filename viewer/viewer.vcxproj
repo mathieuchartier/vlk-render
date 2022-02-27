@@ -84,7 +84,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>C:\Code\vlk-render\external\SDL\include;C:\Code\vlk-render;$(VULKAN_SDK)/Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Code\vlk-render\viewer\x64\Debug;$(VULKAN_SDK)/Lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>C:\Code\vlk-render\viewer\x64\Release;$(VULKAN_SDK)/Lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
