@@ -25,6 +25,12 @@
     <ClInclude Include="vkr_pipeline.h">
       <Filter>Files</Filter>
     </ClInclude>
+    <ClInclude Include="vkr_command.h">
+      <Filter>Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vkr_render.h">
+      <Filter>Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="vkr_engine.cc">

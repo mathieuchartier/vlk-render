@@ -157,10 +157,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="vkr_command.h" />
     <ClInclude Include="vkr_engine.h" />
     <ClInclude Include="vkr_image.h" />
     <ClInclude Include="vkr_physical_devices.h" />
     <ClInclude Include="vkr_pipeline.h" />
+    <ClInclude Include="vkr_render.h" />
     <ClInclude Include="vkr_swap_chain.h" />
     <ClInclude Include="vkr_util.h" />
   </ItemGroup>

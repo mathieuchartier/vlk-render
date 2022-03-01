@@ -16,7 +16,9 @@ class CommandPool {
   VkCommandPool pool_{};
 public:
   CommandPool(VkDevice device, VkCommandPool pool) : device_(device), pool_(pool) {}
-
+  ~CommandPool() {
+	vkDestroyCommandPool(pool);
+  }
   static CommandPool* Create(VkDevice device, uint32_t family_idx) {
 	VkCommandPoolCreateInfo info{};
 	info.sType = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;

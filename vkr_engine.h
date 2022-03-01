@@ -34,7 +34,7 @@ public:
     vkDestroySurfaceKHR(instance_, surface_, Callbacks());
     vkDestroyInstance(instance_, Callbacks());
   }
-
+  
   void InitSwapChain() {
     swap_chain_.Initialize(*this);
   }

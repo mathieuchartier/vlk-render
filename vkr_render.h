@@ -21,9 +21,16 @@ public:
 };
 
 class RenderPass {
+  VkDevice device_;
   VkRenderPass render_pass_;
 public:
-  static void Create(VkFormat format) {
+  RenderPass(VkDevice device, VkRenderPass render_pass) : device_(device), render_pass_(render_pass) {
+  }
+  ~RenderPass() {
+	vkDestroyRenderPass(device_, render_pass_, nullptr);
+  }
+
+  static std::unique_ptr<RenderPass> Create(VkDevice device, VkFormat format, const std::vector<SubPass>& subpasses) {
 	VkAttachmentDescription ca{};
 	ca.format = format;
 	ca.samples = VK_SAMPLE_COUNT_1_BIT;
@@ -38,24 +45,28 @@ public:
 	rpi.sType = VK_STRUCTURE_TYPE_RENDER_PASS_CREATE_INFO;
 	rpi.attachmentCount = 1;
 	rpi.pAttachments = &ca;
-	rpi.subpassCount = 1;
-	rpi.pSubpasses = &subpass;
+	rpi.subpassCount = subpasses.size();
+	std::vector<VkSubpassDescription> descs;
+	for (auto& subpass : subpasses) {
+	  descs.push_back(subpass.subpass_);
+	}
+	rpi.pSubpasses = descs.data();
 	VkRenderPass ret;
-	vkCreateRenderPass(_device, &rpi, nullptr, &ret);
+	vkCreateRenderPass(device, &rpi, nullptr, &ret);
+	return std::make_unique<RenderPass>(device, ret);
   }
 
-  std::unique_ptr<FrameBuffer> CreateFrameBuffer(VkDevice device, VkImageView swap_chain_view, VkExtent2D extent) {
-	//create the framebuffers for the swapchain images. This will connect the render-pass to the images for rendering
+  std::unique_ptr<FrameBuffer> CreateFrameBuffer(VkImageView swap_chain_view, VkExtent2D extent) {
 	VkFramebufferCreateInfo info{};
 	info.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
 	info.renderPass = render_pass_;
-	info.attachmentCount = 1;
 	info.width = extent.width;
 	info.height = extent.height;
 	info.layers = 1;
+	info.attachmentCount = 1;
 	info.pAttachments = &swap_chain_view;
 	VkFramebuffer fb{};
-	auto res = vkCreateFramebuffer(device, &info, nullptr, &fb);
+	auto res = vkCreateFramebuffer(device_, &info, nullptr, &fb);
 	return std::make_unique<FrameBuffer>(fb);
   }
 };
